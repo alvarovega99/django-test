@@ -56,7 +56,14 @@ class ProductsView(View):
                 price=price,
                 image=image
             )
-            response = ResponseDto(message="Created", data=product)
+            response_data = {
+                'id': product.id,
+                'name': product.name,
+                'description': product.description,
+                'price': product.price,
+                'image': product.image
+            }
+            response = ResponseDto(message="Created", data=response_data)
             return response.to_json()
         except Exception as e:
             response = ResponseDto(status=500, message=str(e))
@@ -67,7 +74,8 @@ class ProductsView(View):
             product = Product.objects.get(pk=id)
             data = json.loads(request.body)
             product.name = data.get('name') or product.name
-            product.description = data.get('description') or product.description
+            product.description = data.get(
+                'description') or product.description
             product.price = data.get('price') or product.price
             product.image = data.get('image') or product.image
             product.save()
