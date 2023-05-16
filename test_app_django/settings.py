@@ -1,5 +1,10 @@
 from pathlib import Path
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
+
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -62,11 +67,11 @@ WSGI_APPLICATION = 'test_app_django.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('PORT_DB'),
+        'NAME': os.getenv('DB_NAME') or 'postgres',
+        'USER': os.getenv('DB_USER') or 'postgres',
+        'PASSWORD': os.getenv('DB_PASSWORD') or 'postgres',
+        'HOST': os.getenv('DB_HOST') or 'localhost',
+        'PORT': os.getenv('PORT_DB') or '5432',
     }
 }
 
